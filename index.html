@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Giappone 2027 in foto</title>
+<meta name="description" content="Il programma di 20 giorni in Giappone, 8–27 agosto 2027, giorno per giorno con le foto.">
+<meta property="og:title" content="Giappone 2027 in foto">
+<meta property="og:description" content="20 giorni da Tokyo a Kyoto, Osaka e Hakone, giorno per giorno con le foto.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vitojgallo-dev.github.io/giappone-2027/">
+<meta property="og:image" content="https://vitojgallo-dev.github.io/giappone-2027/foto/inari.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0f1a">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: un film notturno. Dietro, una scena a tutto schermo che cambia col giorno; davanti, pannelli di vetro scuro con le schede-foto che salgono dal basso. Un solo look scuro, scelto apposta: le foto vivono meglio sulla notte. */
+:root{
+  --notte:#0b0f1a; --vetro:rgba(11,15,26,.74); --vetro-forte:rgba(11,15,26,.9);
+  --carta:#eef1f7; --tenue:#a9b3c8; --riga:rgba(238,241,247,.14);
+  --lanterna:#ffb35c; --torii:#ef5b45; --ai:#86a9ff; --verde:#8fd3ae;
+  --f-titolo:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --f-testo:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --f-ora:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{background:var(--notte)}
+body{margin:0;background:var(--notte);color:var(--carta);font-family:var(--f-testo);font-size:15px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--notte)}
+h1,h2,h3{font-family:var(--f-titolo);text-wrap:balance;line-height:1.15;margin:0}
+p{margin:0}
+img{display:block;max-width:100%}
+a{color:var(--ai)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--lanterna);outline-offset:3px}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.largo{max-width:1180px;margin:0 auto}
+
+/* la scena dietro a tutto */
+#scena{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--notte)}
+#scena img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
+#scena img.on{opacity:1;animation:kb 16s ease-out forwards}
+@keyframes kb{from{transform:scale(1.12) translate3d(0,1.5%,0)}to{transform:scale(1) translate3d(0,0,0)}}
+#scena::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,15,26,.82) 0%,rgba(11,15,26,.45) 52%,rgba(11,15,26,.12) 100%),linear-gradient(0deg,rgba(11,15,26,.7),transparent 40%)}
+main,header,footer{position:relative;z-index:1}
+
+/* la data che scorre */
+#hud{position:fixed;z-index:30;background:var(--vetro-forte);border:1px solid var(--riga);border-radius:12px;padding:8px 14px 10px;backdrop-filter:blur(10px);right:max(18px,env(safe-area-inset-right,0px));top:calc(18px + env(safe-area-inset-top,0px));display:grid;justify-items:end;gap:4px;text-align:right;pointer-events:none;opacity:0;transform:translateY(-10px);transition:opacity .5s,transform .5s}
+#hud.on{opacity:1;transform:none}
+.hud-data{display:flex;align-items:flex-end;gap:10px}
+.flip{display:grid;overflow:hidden;height:5.2rem;font-family:var(--f-titolo);font-weight:800;font-size:5.2rem;line-height:1}
+.flip span{grid-area:1/1;justify-self:end;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .55s}
+.flip span.esce{transform:translateY(-100%);opacity:0}
+.flip span.entra{transform:translateY(100%);opacity:0}
+.hud-mese{font-family:var(--f-ora);font-size:.8rem;letter-spacing:.16em;line-height:1.35;color:var(--tenue);padding-bottom:.6rem;text-align:left}
+.hud-mese b{color:var(--carta);display:block}
+.hud-dove{font-family:var(--f-ora);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.hud-festa{font-family:var(--f-ora);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--notte);background:var(--torii);padding:1px 8px;border-radius:3px;opacity:0;transition:opacity .4s}
+.hud-festa.on{opacity:1}
+.hud-barra{display:flex;gap:3px;margin-top:6px}
+.hud-barra i{width:9px;height:3px;background:var(--riga);border-radius:1px;transition:background .4s}
+.hud-barra i.fatto{background:var(--carta)}
+.hud-barra i.ora{background:var(--lanterna)}
+
+/* copertina */
+.copertina{min-height:100svh;display:grid;align-content:end;padding-block:120px 64px}
+.occhiello{font-family:var(--f-ora);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lanterna)}
+.copertina h1{font-size:clamp(3rem,11vw,8.4rem);font-weight:800;letter-spacing:-.015em;margin-top:12px}
+.copertina h1 .riga{display:block;overflow:hidden;padding-bottom:.06em}
+.copertina h1 .riga span{display:inline-block}
+.copertina h1 em{font-style:normal;color:var(--lanterna)}
+.copertina .sotto{max-width:54ch;font-size:1.08rem;color:var(--carta);opacity:.92;margin-top:18px}
+.azioni{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.bottone{border:1px solid rgba(238,241,247,.55);background:rgba(238,241,247,.08);color:var(--carta);padding:11px 20px;border-radius:999px;text-decoration:none;font-weight:500;backdrop-filter:blur(8px)}
+.bottone.pieno{background:var(--lanterna);border-color:var(--lanterna);color:var(--notte);font-weight:700}
+.scorri{margin-top:44px;font-family:var(--f-ora);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tenue);display:flex;align-items:center;gap:10px}
+.scorri i{display:block;width:1px;height:42px;background:linear-gradient(var(--lanterna),transparent);animation:goccia 1.8s ease-in-out infinite}
+@keyframes goccia{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* il giro */
+.pannello{background:var(--vetro);backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);border:1px solid var(--riga);border-radius:14px}
+.giro{padding-block:12vh}
+.giro .pannello{padding:28px clamp(18px,3vw,36px)}
+h2.sez{font-size:clamp(1.9rem,4.5vw,3rem)}
+.intro{color:var(--tenue);max-width:58ch;margin-top:8px}
+.rotta{margin-top:26px;overflow:hidden}
+.rotta svg{width:100%;height:auto;display:block}
+.rotta path{fill:none;stroke:var(--lanterna);stroke-width:3;stroke-linecap:round}
+.rotta circle{fill:var(--notte);stroke:var(--carta);stroke-width:2.5}
+.rotta circle.ryo{stroke:var(--torii)}
+.rotta text{fill:var(--carta);font-family:var(--f-ora);font-size:13px}
+.rotta text.k{font-family:var(--f-titolo);font-size:22px;fill:var(--lanterna)}
+.tappe{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:22px}
+@media (min-width:640px){.tappe{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:1000px){.tappe{grid-template-columns:repeat(8,minmax(0,1fr))}}
+.tappa{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:3/4;color:var(--carta);text-decoration:none;background:#151b2b}
+.tappa img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.tappa:hover img{transform:scale(1.08)}
+.tappa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(11,15,26,.85))}
+.tappa div{position:absolute;left:12px;right:12px;bottom:10px;z-index:1}
+.tappa b{font-family:var(--f-titolo);font-size:1.2rem;display:block}
+.tappa small{font-family:var(--f-ora);font-size:.7rem;color:var(--tenue)}
+.tappa .k{position:absolute;top:8px;left:10px;z-index:1;font-family:var(--f-titolo);font-size:1.2rem;color:var(--lanterna);text-shadow:0 1px 8px rgba(0,0,0,.85)}
+
+/* capitoli delle città */
+.capitolo{min-height:92svh;display:grid;place-items:center;text-align:center;padding-block:10vh;overflow:hidden}
+.capitolo .kanji{font-family:var(--f-titolo);font-weight:800;font-size:clamp(7rem,28vw,20rem);line-height:.9;color:transparent;-webkit-text-stroke:2px var(--carta);letter-spacing:.02em;white-space:nowrap}
+.capitolo h2{font-size:clamp(2.2rem,7vw,5rem);margin-top:6px}
+.capitolo p{font-family:var(--f-ora);letter-spacing:.16em;text-transform:uppercase;color:var(--lanterna);font-size:.8rem;margin-top:10px}
+.capitolo .riga-c{max-width:46ch;margin:14px auto 0;color:var(--carta);opacity:.9;letter-spacing:0;text-transform:none;font-family:var(--f-testo);font-size:1rem}
+
+/* i giorni */
+.giorno{padding-block:14vh;scroll-margin-top:20px}
+.giorno .pannello{max-width:760px;padding:26px clamp(16px,3vw,32px) 22px}
+.giorno.destra .pannello{margin-left:auto}
+.testa{display:grid;gap:6px;margin-bottom:18px}
+.dove{font-family:var(--f-ora);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue)}
+.dove .fest{color:var(--torii)}
+.numero{display:flex;align-items:baseline;gap:14px}
+.numero b{font-family:var(--f-titolo);font-weight:800;font-size:clamp(3.6rem,9vw,6rem);line-height:.9;color:transparent;-webkit-text-stroke:1.5px var(--lanterna)}
+.numero span{font-family:var(--f-ora);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue)}
+.giorno h3{font-size:clamp(1.5rem,3.2vw,2.2rem)}
+.schede{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.scheda{background:rgba(238,241,247,.05);border:1px solid var(--riga);border-radius:10px;overflow:hidden;display:grid;align-content:start}
+.scheda figure{margin:0;overflow:hidden;aspect-ratio:4/3;background:#151b2b}
+.scheda figure img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.scheda:hover figure img{transform:scale(1.07)}
+.scheda .t{padding:10px 12px 12px;display:grid;gap:2px}
+.scheda time{font-family:var(--f-ora);font-size:.78rem;color:var(--lanterna)}
+.scheda span{font-size:.92rem;line-height:1.35}
+.scheda.solo{background:transparent;border-style:dashed;align-self:start}
+.extra{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:.84rem;border:1px solid var(--riga);border-radius:999px;padding:5px 12px;background:rgba(238,241,247,.04)}
+.chip b{font-family:var(--f-ora);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;margin-right:6px}
+.chip.cibo b{color:var(--verde)}
+.chip.compra b{color:var(--ai)}
+.chip.dorme b{color:var(--lanterna)}
+
+/* mosaici finali */
+.sezione{padding-block:14vh}
+.sezione .pannello{padding:28px clamp(16px,3vw,36px)}
+.mosaico{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:22px}
+.mosaico figure{margin:0;border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/5;background:#151b2b}
+.mosaico img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.mosaico figure:hover img{transform:scale(1.07)}
+.mosaico figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(11,15,26,.9))}
+.mosaico figcaption{position:absolute;left:14px;right:14px;bottom:12px;z-index:1;display:grid;gap:2px}
+.mosaico figcaption em{font-style:normal;font-family:var(--f-ora);font-size:.7rem;letter-spacing:.08em;color:var(--lanterna)}
+.mosaico figcaption b{font-family:var(--f-titolo);font-size:1.25rem}
+.mosaico figcaption span{font-size:.84rem;color:var(--tenue)}
+
+footer{padding-block:12vh 80px}
+footer .pannello{padding:24px clamp(16px,3vw,32px);display:grid;gap:10px;font-size:.78rem;color:var(--tenue)}
+footer h3{font-size:1.1rem;color:var(--carta)}
+footer ol{margin:0;padding-left:18px;columns:3 260px;column-gap:28px}
+footer li{break-inside:avoid;margin-bottom:3px}
+.fine{text-align:center;padding-block:10vh 4vh}
+.fine .kanji{font-family:var(--f-titolo);font-size:clamp(3rem,10vw,7rem);font-weight:800;color:var(--lanterna)}
+.fine p{color:var(--tenue);margin-top:8px}
+
+/* presentazione */
+.show{position:fixed;inset:0;z-index:60;background:var(--notte);color:var(--carta);display:grid}
+.show img.sfondo{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;animation:kb 12s ease-out forwards}
+.show::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,15,26,.88) 0%,rgba(11,15,26,.55) 50%,rgba(11,15,26,.1) 100%);pointer-events:none}
+.show .slide{position:relative;z-index:1;align-self:center;max-width:680px;display:grid;gap:14px;
+  padding:calc(70px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(96px + env(safe-area-inset-bottom,0px)) max(28px,env(safe-area-inset-left,0px))}
+.show .slide > *{animation:sale .7s cubic-bezier(.2,.8,.2,1) both}
+.show .slide > *:nth-child(2){animation-delay:.08s}.show .slide > *:nth-child(3){animation-delay:.16s}.show .slide > *:nth-child(4){animation-delay:.24s}.show .slide > *:nth-child(5){animation-delay:.32s}
+@keyframes sale{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.show .num{font-family:var(--f-ora);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lanterna)}
+.show h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:800}
+.show .grande{font-family:var(--f-titolo);font-size:clamp(4rem,12vw,8rem);line-height:.9;font-weight:800;color:transparent;-webkit-text-stroke:2px var(--carta)}
+.show .striscia{display:flex;gap:8px;overflow:hidden}
+.show .striscia img{width:110px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--riga);flex:none}
+.show .lista{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:1rem}
+.show .lista time{font-family:var(--f-ora);color:var(--lanterna);margin-right:10px;font-size:.85rem}
+.show .comandi{position:absolute;z-index:2;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:14px max(20px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.show .comandi button,.show .chiudi{background:rgba(238,241,247,.12);color:var(--carta);border:1px solid rgba(238,241,247,.45);border-radius:999px;padding:9px 16px}
+.show .barra-av{flex:1;height:3px;background:var(--riga);border-radius:2px;overflow:hidden}
+.show .barra-av i{display:block;height:100%;background:var(--lanterna);transition:width .4s}
+.show .chiudi{position:absolute;z-index:2;top:calc(14px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));padding:7px 14px}
+.show .credito{position:absolute;z-index:2;top:calc(20px + env(safe-area-inset-top,0px));left:max(20px,env(safe-area-inset-left,0px));font-size:.7rem;color:var(--tenue);max-width:60%}
+
+@media (max-width:760px){
+  #scena::after{background:linear-gradient(180deg,rgba(11,15,26,.35),rgba(11,15,26,.8) 70%)}
+  #hud{left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));top:calc(10px + env(safe-area-inset-top,0px));
+    grid-template-columns:auto 1fr;justify-items:start;text-align:left;background:var(--vetro-forte);border:1px solid var(--riga);border-radius:10px;padding:6px 12px;backdrop-filter:blur(10px)}
+  .flip{height:2.4rem;font-size:2.4rem}
+  .flip span{justify-self:start}
+  .hud-mese{padding-bottom:.15rem}
+  .hud-destra{display:grid;gap:2px;justify-items:end;align-self:center;justify-self:end}
+  .hud-barra i{width:5px}
+  .giorno{padding-block:9vh}
+  .schede{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .scheda .t{padding:8px 9px 10px}
+  .scheda span{font-size:.84rem}
+  .show::after{background:linear-gradient(180deg,rgba(11,15,26,.3) 0%,rgba(11,15,26,.9) 55%)}
+  .show .slide{align-self:end}
+  .show .striscia img{width:80px;height:58px}
+}
+@media (prefers-reduced-motion:reduce){
+  #scena img.on,.show img.sfondo,.scorri i{animation:none}
+  .show .slide > *{animation:none}
+  .flip span,#scena img{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div id="scena" aria-hidden="true"><img id="sa" alt=""><img id="sb" alt=""></div>
+
+<div id="hud" aria-hidden="true">
+  <div class="hud-data"><div class="flip" id="hud-n"><span>8</span></div><div class="hud-mese"><b id="hud-gs">DOM</b>AGO<br>2027</div></div>
+  <div class="hud-destra"><div class="hud-dove" id="hud-dove">Tokyo</div><span class="hud-festa" id="hud-festa">festa</span><div class="hud-barra" id="hud-barra"></div></div>
+</div>
+
+<header class="copertina gutter" data-scena="inari">
+  <div class="largo">
+    <p class="occhiello">旅のしおり · 8 → 27 agosto 2027 · in 3</p>
+    <h1><span class="riga"><span>Giappone,</span></span><span class="riga"><span><em>20 giorni</em></span></span></h1>
+    <p class="sotto">Da Tokyo alle Alpi giapponesi, da Kyoto a Osaka, fino al ryokan di Hakone e al mare di Kamakura. Festival dell'Obon, Akihabara, wagyu, sushi e cibo di strada.</p>
+    <div class="azioni"><button class="bottone pieno" id="apri-show" type="button">▶ Presentazione</button><a class="bottone" href="#g8">Comincia dal giorno 1</a></div>
+    <p class="scorri"><i></i>scorri</p>
+  </div>
+</header>
+
+<main>
+  <section class="giro gutter" data-scena="kinkakuji" aria-labelledby="t-giro"><div class="largo pannello">
+    <h2 class="sez" id="t-giro">Il giro</h2>
+    <p class="intro">Otto tappe in treno, una notte in ryokan, valigie spedite con Yamato fra Tokyo, Kyoto e Osaka.</p>
+    <div class="rotta" id="rotta"></div>
+    <div class="tappe" id="tappe"></div>
+  </div></section>
+
+  <div id="viaggio"></div>
+
+  <section class="sezione gutter" data-scena="nara" aria-labelledby="t-feste"><div class="largo pannello">
+    <h2 class="sez" id="t-feste">Le notti di festa</h2>
+    <p class="intro">Agosto è il mese dell'Obon, quando si accolgono e poi si salutano gli spiriti degli antenati. Il viaggio passa per le sue notti più belle.</p>
+    <div class="mosaico" id="feste"></div>
+  </div></section>
+
+  <section class="sezione gutter" data-scena="wagyu" aria-labelledby="t-cibo"><div class="largo pannello">
+    <h2 class="sez" id="t-cibo">Da mangiare</h2>
+    <p class="intro">Wagyu e sushi in tutte le fasce di prezzo, più il cibo di strada di ogni città.</p>
+    <div class="mosaico" id="cibo"></div>
+  </div></section>
+
+  <section class="sezione gutter" data-scena="akihabara" aria-labelledby="t-nerd"><div class="largo pannello">
+    <h2 class="sez" id="t-nerd">Nerd e notte</h2>
+    <p class="intro">Retrogame, collezionismo, arte digitale e vicoli da sei posti a sedere.</p>
+    <div class="mosaico" id="nerd"></div>
+  </div></section>
+
+  <section class="fine gutter" data-scena="hakone"><div class="largo">
+    <div class="kanji">いってらっしゃい</div>
+    <p>Itterasshai: "vai e torna". Così si saluta chi parte.</p>
+  </div></section>
+</main>
+
+<footer class="gutter" data-scena="hakone"><div class="largo pannello">
+  <h3>Foto</h3>
+  <p>Tutte da Wikimedia Commons, con licenza libera. Autore e licenza di ciascuna:</p>
+  <ol id="crediti"></ol>
+</div></footer>
+
+<div class="show" id="show" hidden role="dialog" aria-modal="true" aria-label="Presentazione">
+  <img class="sfondo" id="s-img" alt="">
+  <p class="credito" id="s-cred"></p>
+  <button class="chiudi" id="s-chiudi" type="button">Chiudi ✕</button>
+  <div class="slide" id="s-slide"></div>
+  <div class="comandi">
+    <button id="s-prima" type="button">← Prima</button>
+    <div class="barra-av"><i id="s-av"></i></div>
+    <button id="s-dopo" type="button">Dopo →</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+const FOTO = (k) => "foto/" + k + ".jpg";
+const CREDITI = {"asakusa":{"titolo":"File:Kaminarimon of Sensoji Temple 1.JPG","autore":"そらみみ","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Kaminarimon_of_Sensoji_Temple_1.JPG"},"akihabara":{"titolo":"File:Sotokanda, Akihabara Electric Town at night 20231114.png","autore":"Phineyes","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Sotokanda,_Akihabara_Electric_Town_at_night_20231114.png"},"shibuya":{"titolo":"File:Shibuya scramble crossing during Halloween 2023, actually less crowded than usual, high police presence 2.jpg","autore":"Syced","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Shibuya_scramble_crossing_during_Halloween_2023,_actually_less_crowded_than_usual,_high_police_presence_2.jpg"},"hanabi":{"titolo":"File:Sumidagawa Fireworks Festival 2023 (53327934432).jpg","autore":"Dick Thomas Johnson from Tokyo, Japan","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Sumidagawa_Fireworks_Festival_2023_(53327934432).jpg"},"nikko":{"titolo":"File:Kamijinko, Tōshō-gū, Nikko, South view 20190423 1.jpg","autore":"DXR","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kamijinko,_T%C5%8Dsh%C5%8D-g%C5%AB,_Nikko,_South_view_20190423_1.jpg"},"kanazawa":{"titolo":"File:Kotojitoro (lantern) in Kenrokuen garden, Kanazawa, Japan (2621642647).jpg","autore":"KimonBerlin","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Kotojitoro_(lantern)_in_Kenrokuen_garden,_Kanazawa,_Japan_(2621642647).jpg"},"shirakawa":{"titolo":"File:Shirakawa-go from Ogimachi Joseki Observatory 36446961844.jpg","autore":"吉爾 from 臺北縣, 臺灣","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Shirakawa-go_from_Ogimachi_Joseki_Observatory_36446961844.jpg"},"takayama":{"titolo":"File:Sanmachi Takayama02ds3872.jpg","autore":"663highland","licenza":"CC BY 2.5","pagina":"https://commons.wikimedia.org/wiki/File:Sanmachi_Takayama02ds3872.jpg"},"nara":{"titolo":"File:Setsubun Mantoro Festival 20150203 07.jpg","autore":"Degueulasse","licenza":"CC BY 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Setsubun_Mantoro_Festival_20150203_07.jpg"},"okuribi":{"titolo":"File:Gozanokuribi Daimonji2.jpg","autore":"J_o","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Gozanokuribi_Daimonji2.jpg"},"inari":{"titolo":"File:Fushimi Inari - Torii Tunnel 03.jpg","autore":"Chris Gladis from Kyoto, Japan","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Fushimi_Inari_-_Torii_Tunnel_03.jpg"},"byodoin":{"titolo":"File:Phoenix Hall, Byodo-in, November 2016 -01.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Phoenix_Hall,_Byodo-in,_November_2016_-01.jpg"},"kibune":{"titolo":"File:貴船神社 Kibune Jinja (KYOTO-JAPAN) (4951368080).jpg","autore":"Chi King","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:%E8%B2%B4%E8%88%B9%E7%A5%9E%E7%A4%BE_Kibune_Jinja_(KYOTO-JAPAN)_(4951368080).jpg"},"dotonbori":{"titolo":"File:Dotonbori, Osaka, at night, November 2016.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Dotonbori,_Osaka,_at_night,_November_2016.jpg"},"osakajo":{"titolo":"File:Osaka Castle - Japan.jpg","autore":"Manish Prabhune","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Osaka_Castle_-_Japan.jpg"},"umeda":{"titolo":"File:Umeda Sky Building, Osaka, November 2016 -01.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Umeda_Sky_Building,_Osaka,_November_2016_-01.jpg"},"himeji":{"titolo":"File:Château de Himeji02.jpg","autore":"Bernard Gagnon","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_de_Himeji02.jpg"},"hakone":{"titolo":"File:Torii on Lake Ashi @ Hakone Shrine (13776879364).jpg","autore":"Guilhem Vellut from Annecy, France","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Torii_on_Lake_Ashi_@_Hakone_Shrine_(13776879364).jpg"},"kamakura":{"titolo":"File:Kamakura Budda Daibutsu front 1885.jpg","autore":"Dirk Beyer","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Kamakura_Budda_Daibutsu_front_1885.jpg"},"yokohama":{"titolo":"File:The night view of Minato Mirai 21 - 3.jpg","autore":"Kakidai","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:The_night_view_of_Minato_Mirai_21_-_3.jpg"},"nakano":{"titolo":"File:Nakano broadway entrance.JPG","autore":"User:Kentin","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Nakano_broadway_entrance.JPG"},"kappabashi":{"titolo":"File:Kappabashi-dori streetcorner (Kitchen town - southern end) a sunny morning in Tokyo Japan.jpg","autore":"Basile Morin","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kappabashi-dori_streetcorner_(Kitchen_town_-_southern_end)_a_sunny_morning_in_Tokyo_Japan.jpg"},"kinkakuji":{"titolo":"File:Water reflection of Kinkaku-ji Temple a sunny day, Kyoto, Japan.jpg","autore":"Basile Morin","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day,_Kyoto,_Japan.jpg"},"arashiyama":{"titolo":"File:Bamboo Grove, Arashiyama, Kyoto, Japan.jpg","autore":"Basile Morin","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Bamboo_Grove,_Arashiyama,_Kyoto,_Japan.jpg"},"wagyu":{"titolo":"File:KobeBeefOnGrill.jpg","autore":"","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:KobeBeefOnGrill.jpg"},"sushi":{"titolo":"File:Shichifuku Nigiri Sushi at Tsukiji Tamasushi, Wing Takanawa (20230802203124).jpg","autore":"N509FZ","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Shichifuku_Nigiri_Sushi_at_Tsukiji_Tamasushi,_Wing_Takanawa_(20230802203124).jpg"},"takoyaki":{"titolo":"File:Honkeohtako's takoyaki, Osaka; December 2013 (03).jpg","autore":"City Foodsters","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Honkeohtako%27s_takoyaki,_Osaka;_December_2013_(03).jpg"},"ramen":{"titolo":"File:A bowl of tonkotsu ramen at Ichiran in Tokyo in July 2026.jpg","autore":"Gatorfan252525","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:A_bowl_of_tonkotsu_ramen_at_Ichiran_in_Tokyo_in_July_2026.jpg"},"ryokan":{"titolo":"File:Ryokan roomIMG 0819C.JPG","autore":"אלי שני (שנילי • שיחה)","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Ryokan_roomIMG_0819C.JPG"},"goldengai":{"titolo":"File:Golden Gai (2).jpg","autore":"Gzzz","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Golden_Gai_(2).jpg"},"enoshima":{"titolo":"File:Enoshima, Japan (15662062438).jpg","autore":"wellflat .","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Enoshima,_Japan_(15662062438).jpg"},"shimokitazawa":{"titolo":"File:Shimokitazawa Street 2015.jpg","autore":"Aw1805","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Shimokitazawa_Street_2015.jpg"},"monja":{"titolo":"File:Monjayaki After.JPG","autore":"Jpatokal","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Monjayaki_After.JPG"},"teamlab":{"titolo":"File:Photos at teamlab planets tokyo.jpg","autore":"Sasa0403","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Photos_at_teamlab_planets_tokyo.jpg"},"koshien":{"titolo":"File:2020 Koshien High School Baseball Exchange Game Opening Ceremony 1.jpg","autore":"文部科学省","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:2020_Koshien_High_School_Baseball_Exchange_Game_Opening_Ceremony_1.jpg"},"shinsekai":{"titolo":"File:Shinsekai and Tsutenkaku Tower.jpg","autore":"Sakai Yayoi","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Shinsekai_and_Tsutenkaku_Tower.jpg"},"sensojinotte":{"titolo":"File:Illuminated Senso-ji Temple (10492173864).jpg","autore":"Yoshikazu TAKADA from Tokyo, Japan","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Illuminated_Senso-ji_Temple_(10492173864).jpg"},"kaiten":{"titolo":"File:010 Sushi master in Kyoto, Japan - sushi chef 寿司職人.jpg","autore":"Marek Ślusarczyk (Tupungato) Photo portfolio","licenza":"CC BY 3.0","pagina":"https://commons.wikimedia.org/wiki/File:010_Sushi_master_in_Kyoto,_Japan_-_sushi_chef_%E5%AF%BF%E5%8F%B8%E8%81%B7%E4%BA%BA.jpg"},"donki":{"titolo":"File:Don Quijote Shinjuku Okubo store in 2013.jpg","autore":"se7en","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Don_Quijote_Shinjuku_Okubo_store_in_2013.jpg"},"azumabashi":{"titolo":"File:Tokyo Skytree at night; August 2017.jpg","autore":"Zengame from Tokyo, Japan","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Tokyo_Skytree_at_night;_August_2017.jpg"},"radiokaikan":{"titolo":"File:Akihabara Radio Kaikan 1st -01.jpg","autore":"Aimaimyi","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Akihabara_Radio_Kaikan_1st_-01.jpg"},"superpotato":{"titolo":"File:Super Potato in Akihabara (4066556528).jpg","autore":"JoshBerglund19 from United States","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Super_Potato_in_Akihabara_(4066556528).jpg"},"ufocatcher":{"titolo":"File:UFO Catcher Arcade Game, Shinjuku (53416842023).jpg","autore":"Stephen Kelly from San Francisco, CA, USA","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:UFO_Catcher_Arcade_Game,_Shinjuku_(53416842023).jpg"},"batting":{"titolo":"File:Batting Center or Batting Cage in Japan.jpg","autore":"Yoshihiro Kudo","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Batting_Center_or_Batting_Cage_in_Japan.jpg"},"maidcafe":{"titolo":"File:Maid cafe - Welcome at home cheesecake (2009-04-23 22.54.52 by panina.anna).jpg","autore":"panina.anna","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Maid_cafe_-_Welcome_at_home_cheesecake_(2009-04-23_22.54.52_by_panina.anna).jpg"},"meiji":{"titolo":"File:Meiji-jingu Torii 3.jpg","autore":"Zairon","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Meiji-jingu_Torii_3.jpg"},"takeshita":{"titolo":"File:Marion Crêpes in Harajuku Takeshita 2.jpg","autore":"Syced","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Marion_Cr%C3%AApes_in_Harajuku_Takeshita_2.jpg"},"parco":{"titolo":"File:Shibuya Parco 191229b.jpg","autore":"江戸村のとくぞう","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Shibuya_Parco_191229b.jpg"},"gyukatsu":{"titolo":"File:Beef cutlet (8567066968).jpg","autore":"pelican from Tokyo, Japan","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Beef_cutlet_(8567066968).jpg"},"shibuyasky":{"titolo":"File:Tokyo Tower and Skyscrapers from Shibuya Sky Observation Deck (53416648661).jpg","autore":"Stephen Kelly from San Francisco, CA, USA","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Tokyo_Tower_and_Skyscrapers_from_Shibuya_Sky_Observation_Deck_(53416648661).jpg"},"omoide":{"titolo":"File:Shinjuku-West Omoide-Yokocho.jpg","autore":"MaedaAkihiko","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Shinjuku-West_Omoide-Yokocho.jpg"},"fukagawa":{"titolo":"File:Fukagawa Edo Museum.JPG","autore":"Abasaa","licenza":"Public domain","pagina":"https://commons.wikimedia.org/wiki/File:Fukagawa_Edo_Museum.JPG"},"shinkyo":{"titolo":"File:Shinkyo bridge of Nikko - January 2024.jpg","autore":"BluKyubi","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Shinkyo_bridge_of_Nikko_-_January_2024.jpg"},"kegon":{"titolo":"File:Kegon Taki.jpg","autore":"Jordy Meow","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Kegon_Taki.jpg"},"chuzenji":{"titolo":"File:Mount nantai and lake chuzenji.jpg","autore":"Uraomote yamaneko","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Mount_nantai_and_lake_chuzenji.jpg"},"yuba":{"titolo":"File:Hanayori Kiyoe Yuba Croquette.jpg","autore":"花よりキヨエ","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Hanayori_Kiyoe_Yuba_Croquette.jpg"},"ameyoko":{"titolo":"File:Vibrant Ameyoko street Market, アメ横 (6156024678).jpg","autore":"Maarten Heerlien from Voorschoten, The Netherlands","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Vibrant_Ameyoko_street_Market,_%E3%82%A2%E3%83%A1%E6%A8%AA_(6156024678).jpg"},"omicho":{"titolo":"File:Omicho covered market western entrance, Kanazawa, 2016.jpg","autore":"DimiTalen","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Omicho_covered_market_western_entrance,_Kanazawa,_2016.jpg"},"nagamachi":{"titolo":"File:Nagamachi Bukeyashiki.jpg","autore":"Hirorinmasa","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Nagamachi_Bukeyashiki.jpg"},"higashichaya":{"titolo":"File:Higashi Chaya district, Kanazawa (3810720612).jpg","autore":"Andrea Schaffer from Sydney, Australia","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Higashi_Chaya_district,_Kanazawa_(3810720612).jpg"},"oro":{"titolo":"File:Gold leaf on soft ice cream - Kanazawa, Japan - DSC00135.jpg","autore":"Daderot","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Gold_leaf_on_soft_ice_cream_-_Kanazawa,_Japan_-_DSC00135.jpg"},"hidabeef":{"titolo":"File:Hida Beef Box Lunch.jpg","autore":"Miyuki Meinaka","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Hida_Beef_Box_Lunch.jpg"},"sakebrew":{"titolo":"File:Sakabayashi (Sugidama) at Chiyonosono Sake Brewery (Yamaga, Kumamoto).jpg","autore":"Makoragi","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Sakabayashi_(Sugidama)_at_Chiyonosono_Sake_Brewery_(Yamaga,_Kumamoto).jpg"},"hobamiso":{"titolo":"File:Houbamiso.jpg","autore":"Opqr","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Houbamiso.jpg"},"miyagawa":{"titolo":"File:Hida-Takayama Miyagawa Morning Market (15668520238).jpg","autore":"bryan... from Taipei, Taiwan","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Hida-Takayama_Miyagawa_Morning_Market_(15668520238).jpg"},"cervi":{"titolo":"File:Shika Senbei (15180042473).jpg","autore":"sodai gomi","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Shika_Senbei_(15180042473).jpg"},"todaiji":{"titolo":"File:Todai-ji Daibutsuden front view in 2011.jpg","autore":"ONO Masanobu","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Todai-ji_Daibutsuden_front_view_in_2011.jpg"},"daibutsu":{"titolo":"File:20190121 Tōdai-ji Great Buddha-1.jpg","autore":"Balon Greyjoy","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:20190121_T%C5%8Ddai-ji_Great_Buddha-1.jpg"},"tenryuji":{"titolo":"File:Tenryu-ji garden, May 2017.jpg","autore":"Celuici","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Tenryu-ji_garden,_May_2017.jpg"},"okochi":{"titolo":"File:Wooden gate in Okochi Sanso Garden, Kyoto, Japan.jpg","autore":"Basile Morin","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Wooden_gate_in_Okochi_Sanso_Garden,_Kyoto,_Japan.jpg"},"ryoanji":{"titolo":"File:RyoanJi-Dry garden.jpg","autore":"Stephane D'Alu","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:RyoanJi-Dry_garden.jpg"},"manga":{"titolo":"File:Sitting people reading outdoors at Kyoto International Manga Museum 20080608.jpg","autore":"Tatyana Temirbulatova","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Sitting_people_reading_outdoors_at_Kyoto_International_Manga_Museum_20080608.jpg"},"gekkeikan":{"titolo":"File:Gekkeikan Okura Sake Museum01nt3200.jpg","autore":"663highland","licenza":"CC BY 2.5","pagina":"https://commons.wikimedia.org/wiki/File:Gekkeikan_Okura_Sake_Museum01nt3200.jpg"},"kiyomizu":{"titolo":"File:Kiyomizu-dera, Kyoto, November 2016 -01.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-01.jpg"},"nishiki":{"titolo":"File:Tsukemono shop by collinox in Nishiki Ichiba, Kyoto.jpg","autore":"collinox","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg"},"gion":{"titolo":"File:JP 日本 Japan 京都 Kyoto Higashiyama-ku Gion 花見小路通 Hanamikoji Dori 10am morning June 2026 N13P 16.jpg","autore":"HAGAT hOMSZE","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:JP_%E6%97%A5%E6%9C%AC_Japan_%E4%BA%AC%E9%83%BD_Kyoto_Higashiyama-ku_Gion_%E8%8A%B1%E8%A6%8B%E5%B0%8F%E8%B7%AF%E9%80%9A_Hanamikoji_Dori_10am_morning_June_2026_N13P_16.jpg"},"pontocho":{"titolo":"File:Pontocho Alley, Kyoto - Flickr - Sergiy Galyonkin.jpg","autore":"Sergiy Galyonkin from Raleigh, USA","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Pontocho_Alley,_Kyoto_-_Flickr_-_Sergiy_Galyonkin.jpg"},"matcha":{"titolo":"File:アニーのアイスクリーム屋さんのアイスクリーム(抹茶フェアに惹かれて)2.jpg","autore":"経済特区","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:%E3%82%A2%E3%83%8B%E3%83%BC%E3%81%AE%E3%82%A2%E3%82%A4%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%A0%E5%B1%8B%E3%81%95%E3%82%93%E3%81%AE%E3%82%A2%E3%82%A4%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%A0(%E6%8A%B9%E8%8C%B6%E3%83%95%E3%82%A7%E3%82%A2%E3%81%AB%E6%83%B9%E3%81%8B%E3%82%8C%E3%81%A6)2.jpg"},"nijo":{"titolo":"File:Ninomaru Palace, November 2016.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Ninomaru_Palace,_November_2016.jpg"},"eigamura":{"titolo":"File:Toei Kyoto Studio Park from above.jpg","autore":"Maksym Grinenko","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Toei_Kyoto_Studio_Park_from_above.jpg"},"kyotostation":{"titolo":"File:Kyoto Station November 2016 -02.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kyoto_Station_November_2016_-02.jpg"},"kurama":{"titolo":"File:Kurama-dera sanmon.jpg","autore":"KENPEI","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Kurama-dera_sanmon.jpg"},"somen":{"titolo":"File:Somen 001.jpg","autore":"Kropsoq","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Somen_001.jpg"},"ginkakuji":{"titolo":"File:Sunlight through clouds and view of Ginkaku-ji Temple from above, Kyoto, Japan.jpg","autore":"Basile Morin","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Sunlight_through_clouds_and_view_of_Ginkaku-ji_Temple_from_above,_Kyoto,_Japan.jpg"},"filosofia":{"titolo":"File:Tetsugaku no Michi 01.JPG","autore":"Reggaeman","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Tetsugaku_no_Michi_01.JPG"},"suirokaku":{"titolo":"File:251213 Nanzen-ji Suirokaku Kyoto Japan05s3.jpg","autore":"663highland","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:251213_Nanzen-ji_Suirokaku_Kyoto_Japan05s3.jpg"},"kuromon":{"titolo":"File:Kuromon-ichiba in 201408.JPG","autore":"Mc681","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kuromon-ichiba_in_201408.JPG"},"hozenji":{"titolo":"File:Hozenji Yokocho at night.jpg","autore":"Choi2451","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Hozenji_Yokocho_at_night.jpg"},"okonomiyaki":{"titolo":"File:Okonomiyaki 001.jpg","autore":"ume-y","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Okonomiyaki_001.jpg"},"shitennoji":{"titolo":"File:View of Abeno Harukas and Shitennō-ji five-storied pagoda at dusk, January 2024 (clone version) - 9978.jpg","autore":"Laitche","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:View_of_Abeno_Harukas_and_Shitenn%C5%8D-ji_five-storied_pagoda_at_dusk,_January_2024_(clone_version)_-_9978.jpg"},"kushikatsu":{"titolo":"File:KushikatsuDaruma01.jpg","autore":"Aiko99ann","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:KushikatsuDaruma01.jpg"},"amemura":{"titolo":"File:Americamura.JPG","autore":"No machine-readable author provided. Davey 88 assumed (based on copyright claims).","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Americamura.JPG"},"shinsaibashi":{"titolo":"File:UNIQLO Shinsaibashisuji Shopping Street shop and GU Shinsaibashi shop.jpg","autore":"Tokumeigakarinoaoshima","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:UNIQLO_Shinsaibashisuji_Shopping_Street_shop_and_GU_Shinsaibashi_shop.jpg"},"sumiyoshi":{"titolo":"File:Sumiyoshi-taisha, Sorihashi-2.jpg","autore":"Saigen Jiro","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Sumiyoshi-taisha,_Sorihashi-2.jpg"},"dendentown":{"titolo":"File:Den-Den Town, Nipponbashi, Osaka - Jul 12, 2023.jpg","autore":"Clemens Vasters","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Den-Den_Town,_Nipponbashi,_Osaka_-_Jul_12,_2023.jpg"},"yakiniku":{"titolo":"File:Yakiniku Bento - close-up - Takumi AU13.80 (4656015712).jpg","autore":"Alpha from Melbourne, Australia","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Yakiniku_Bento_-_close-up_-_Takumi_AU13.80_(4656015712).jpg"},"konjakukan":{"titolo":"File:Museum of Housing and Living (Osaka Kita-ku) hdsr S5 12.jpg","autore":"Hyppolyte de Saint-Rambert","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Museum_of_Housing_and_Living_(Osaka_Kita-ku)_hdsr_S5_12.jpg"},"tenjinbashi":{"titolo":"File:Tenjinbashisuji shopping street - panoramio.jpg","autore":"DVMG","licenza":"CC BY 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Tenjinbashisuji_shopping_street_-_panoramio.jpg"},"hepfive":{"titolo":"File:HEP Five Ferris wheel, October 2005.jpg","autore":"","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:HEP_Five_Ferris_wheel,_October_2005.jpg"},"kokoen":{"titolo":"File:Himeji Koukoen32n4592.jpg","autore":"663highland","licenza":"CC BY 2.5","pagina":"https://commons.wikimedia.org/wiki/File:Himeji_Koukoen32n4592.jpg"},"nankinmachi":{"titolo":"File:Kobe-Nankinmachi.JPG","autore":"Tomomarusan","licenza":"CC BY 2.5","pagina":"https://commons.wikimedia.org/wiki/File:Kobe-Nankinmachi.JPG"},"kitano":{"titolo":"File:Weathercock House Kobe Kitano Ijinkan 風見鶏の館（旧トーマス住宅）.jpg","autore":"Manish Prabhune","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Weathercock_House_Kobe_Kitano_Ijinkan_%E9%A2%A8%E8%A6%8B%E9%B6%8F%E3%81%AE%E9%A4%A8%EF%BC%88%E6%97%A7%E3%83%88%E3%83%BC%E3%83%9E%E3%82%B9%E4%BD%8F%E5%AE%85%EF%BC%89.jpg"},"porttower":{"titolo":"File:Kobe Port Tower and Maritime Museum, November 2016.jpg","autore":"Martin Falbisoner","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kobe_Port_Tower_and_Maritime_Museum,_November_2016.jpg"},"openair":{"titolo":"File:Hakone Open-air Museum 20211202-5.jpg","autore":"Suicasmo","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Hakone_Open-air_Museum_20211202-5.jpg"},"owakudani":{"titolo":"File:Mount Myojingatake and Owakudani Station from Owakudani Valley.JPG","autore":"そらみみ","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Mount_Myojingatake_and_Owakudani_Station_from_Owakudani_Valley.JPG"},"kurotamago":{"titolo":"File:Black egg @ Owakudani @ Hakone (10621176696).jpg","autore":"Guilhem Vellut from Annecy, France","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Black_egg_@_Owakudani_@_Hakone_(10621176696).jpg"},"piratiashi":{"titolo":"File:Pirate ship on Lake Ashi (9412052470).jpg","autore":"Maarten Heerlien from Voorschoten, The Netherlands","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Pirate_ship_on_Lake_Ashi_(9412052470).jpg"},"komachi":{"titolo":"File:Komachi Dori-Kamakura.jpg","autore":"Urashimataro","licenza":"Public domain","pagina":"https://commons.wikimedia.org/wiki/File:Komachi_Dori-Kamakura.jpg"},"cupnoodles":{"titolo":"File:Cup Noodles Museum @ Yokohama (9054540726).jpg","autore":"Guilhem Vellut from Annecy, France","licenza":"CC BY 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Cup_Noodles_Museum_@_Yokohama_(9054540726).jpg"},"redbrick":{"titolo":"File:Yokohama Red Brick Warehouse 2012.JPG","autore":"Kakidai","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Yokohama_Red_Brick_Warehouse_2012.JPG"},"tsukiji":{"titolo":"File:Tsukiji Outer Market 2.jpg","autore":"Aw1805","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Tsukiji_Outer_Market_2.jpg"},"tokyostation":{"titolo":"File:Tokyo Station (Marunouchi Building).jpg","autore":"Alexandr3126","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Tokyo_Station_(Marunouchi_Building).jpg"},"ginza":{"titolo":"File:Illuminated street corner at blue hour - facade of the building Fujiya in Ginza Chuo-ku Tokyo Japan.jpg","autore":"Basile Morin","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Illuminated_street_corner_at_blue_hour_-_facade_of_the_building_Fujiya_in_Ginza_Chuo-ku_Tokyo_Japan.jpg"},"koenji":{"titolo":"File:Koenji Awa Odori street.jpg","autore":"KQuhen","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Koenji_Awa_Odori_street.jpg"},"tobu":{"titolo":"File:Tobu Series-N100-N101.jpg","autore":"MaedaAkihiko","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Tobu_Series-N100-N101.jpg"},"kagayaki":{"titolo":"File:Hokuriku Shinkansen at Nagano-Station (32147655370).jpg","autore":"contri from Yonezawa, Yamagata, Japan","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Hokuriku_Shinkansen_at_Nagano-Station_(32147655370).jpg"},"hida":{"titolo":"File:JRC HC85-D106 Hida-25.jpg","autore":"MaedaAkihiko","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:JRC_HC85-D106_Hida-25.jpg"},"godzilla":{"titolo":"File:Shinjuku (24850285822).jpg","autore":"Laika ac from UK","licenza":"CC BY-SA 2.0","pagina":"https://commons.wikimedia.org/wiki/File:Shinjuku_(24850285822).jpg"},"gundambase":{"titolo":"File:Gunpla model sprues.jpg","autore":"Gravis","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Gunpla_model_sprues.jpg"},"sannenzaka":{"titolo":"File:Sanneizaka-kyoto.JPG","autore":"Aporon999","licenza":"CC BY-SA 3.0","pagina":"https://commons.wikimedia.org/wiki/File:Sanneizaka-kyoto.JPG"},"kamogawa":{"titolo":"File:Kamo River in Kyoto, 20240820 1748 5192.jpg","autore":"Jakub Hałun","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kamo_River_in_Kyoto,_20240820_1748_5192.jpg"},"doguyasuji":{"titolo":"File:Sennichimae-doguya-suji in 201408.JPG","autore":"Mc681","licenza":"CC BY-SA 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Sennichimae-doguya-suji_in_201408.JPG"},"slamdunk":{"titolo":"File:Kamakurakokomae station 2020 8 21.jpg","autore":"Nesnad","licenza":"CC BY 4.0","pagina":"https://commons.wikimedia.org/wiki/File:Kamakurakokomae_station_2020_8_21.jpg"},"chinatown":{"titolo":"File:Yokohama Chinatown 9.jpg","autore":"Syced","licenza":"CC0","pagina":"https://commons.wikimedia.org/wiki/File:Yokohama_Chinatown_9.jpg"}};
+
+const CAPITOLI = {
+  8: ["東京", "Tokyo", "5 notti · 8–12 agosto", "Templi all'alba, Akihabara di notte, vintage, fuochi sul fiume.", "shibuya"],
+  12: ["日光", "Nikko", "in giornata · 12 agosto", "Santuari dorati nel bosco di cedri, un lago e una cascata di 97 metri.", "nikko"],
+  13: ["金沢", "Kanazawa", "1 notte · 13 agosto", "Giardini, samurai, case da tè e gelato coperto d'oro.", "kanazawa"],
+  14: ["高山", "Shirakawa-go e Takayama", "1 notte · 14 agosto", "Tetti di paglia e vie di legno nelle Alpi giapponesi.", "shirakawa"],
+  15: ["京都", "Kyoto e Nara", "5 notti · 15–19 agosto", "Lanterne, fuochi sulle montagne, diecimila torii, tè di Uji.", "kinkakuji"],
+  20: ["大阪", "Osaka", "4 notti · 20–23 agosto", "La cucina della nazione, i vicoli rétro, un castello bianco e il manzo di Kobe.", "dotonbori"],
+  24: ["箱根", "Hakone", "ryokan · 24 agosto", "Il vulcano, il lago, il torii sull'acqua. L'onsen del viaggio.", "hakone"],
+  25: ["鎌倉", "Kamakura e Yokohama", "25 agosto", "Un'isola, il Grande Buddha, il porto di notte.", "kamakura"],
+  26: ["東京", "Tokyo, di nuovo", "2 notti · 25–27 agosto", "Mercato del pesce, Ginza, vintage e l'ultima cena di wagyu.", "tokyostation"],
+};
+
+const TAPPE = [
+  ["東京","Tokyo","5 notti","shibuya","g8"],["日光","Nikko","in giornata","nikko","g12"],["金沢","Kanazawa","1 notte","kanazawa","g13"],
+  ["高山","Takayama","1 notte","takayama","g14"],["京都","Kyoto","5 notti","kinkakuji","g15"],["大阪","Osaka","4 notti","dotonbori","g20"],
+  ["箱根","Hakone","ryokan","hakone","g24"],["東京","Tokyo","2 notti","yokohama","g25"],
+];
+
+const GIORNI = [
+  {d:8,gs:"dom",dove:"Tokyo · Asakusa",t:"Arrivo e prima sera ad Asakusa",img:"asakusa",dorme:"MIMARU Asakusa Station",
+   m:[["14:00","Atterraggio, Suica e contanti",null],["17:00","Check-in ad Asakusa",null],["18:00","Senso-ji illuminato, senza folla","sensojinotte"],["19:00","Primo sushi a nastro al Kura Sushi ROX","kaiten"],["20:30","Don Quijote, il primo giro di snack","donki"],["21:00","Lo Skytree dal ponte Azuma","azumabashi"]],
+   cibo:"spiedini di Hoppy-dori, konbini",compra:"snack e Kit Kat strani"},
+  {d:9,gs:"lun",dove:"Tokyo · Asakusa e Akihabara",t:"Asakusa all'alba, poi Akihabara fino a notte",img:"akihabara",dorme:"MIMARU Asakusa Station",
+   m:[["07:00","Senso-ji vuoto all'alba","asakusa"],["10:00","Kappabashi, la via degli utensili","kappabashi"],["13:30","Radio Kaikan e Mandarake","radiokaikan"],["14:30","Super Potato, il tempio del retrogame","superpotato"],["16:00","UFO catcher e purikura","ufocatcher"],["17:00","Batting center sul tetto della Yodobashi","batting"],["18:30","Maid café","maidcafe"],["21:00","Karaoke con le stanze anime",null]],
+   cibo:"melonpan, age-manjū, tendon",compra:"tenugui, retrogame, figure"},
+  {d:10,gs:"mar",dove:"Tokyo · Harajuku, Shibuya, Shinjuku",t:"Harajuku, Shibuya, vintage e Golden Gai",img:"shibuya",dorme:"MIMARU Asakusa Station",
+   m:[["07:30","Meiji Jingu nel bosco","meiji"],["08:45","Takeshita-dori e crêpe","takeshita"],["10:00","Shibuya PARCO: Nintendo, Capcom, Jump, Gundam","parco"],["11:15","Gyukatsu Motomura, cotoletta di wagyu","gyukatsu"],["12:15","Shibuya Crossing dall'alto","shibuya"],["15:30","Vintage a Shimokitazawa","shimokitazawa"],["17:45","Shibuya Sky al tramonto","shibuyasky"],["19:30","Yakitori a Omoide Yokocho","omoide"],["21:00","Golden Gai","goldengai"]],
+   cibo:"crêpe, nigiri di wagyu da Sagoemon",compra:"Shibuya 109, Cat Street, vintage"},
+  {d:11,gs:"mer",dove:"Tokyo est · festa nazionale",fest:true,t:"Arte digitale, la vecchia Edo e i fuochi sul fiume",img:"hanabi",dorme:"MIMARU Asakusa Station",
+   m:[["09:00","teamLab Planets, scalzi nell'acqua","teamlab"],["11:00","Gundam Base Tokyo a Odaiba","gundambase"],["13:00","Monjayaki a Tsukishima","monja"],["14:30","Fukagawa Edo Museum","fukagawa"],["19:00","Kōtō Hanabi, un'ora di fuochi","hanabi"]],
+   cibo:"monjayaki, fukagawa-meshi, kakigori",compra:"Gunpla, un yukata"},
+  {d:12,gs:"gio",dove:"Nikko · in giornata",t:"Templi nel bosco, lago e cascata",img:"nikko",dorme:"MIMARU Asakusa Station",
+   m:[["07:00","Spacia X da Asakusa","tobu"],["09:00","Il ponte rosso Shinkyo","shinkyo"],["10:00","Toshogu: le tre scimmie e il gatto che dorme","nikko"],["12:00","Pranzo di yuba","yuba"],["13:00","Lago Chuzenji","chuzenji"],["14:30","Cascata Kegon","kegon"],["19:30","Izakaya sotto i binari di Ameyoko","ameyoko"]],
+   cibo:"age-yuba manjū, kakigori di ghiaccio naturale",compra:"legno intagliato Nikko-bori"},
+  {d:13,gs:"ven",dove:"Kanazawa · inizio Obon",t:"Mercato, giardino, samurai e geishe",img:"kanazawa",dorme:"Dormy Inn Kanazawa",
+   m:[["07:30","Kagayaki da Ueno","kagayaki"],["11:00","Mercato Omicho","omicho"],["12:45","Kenrokuen","kanazawa"],["14:30","Nagamachi, il quartiere samurai","nagamachi"],["16:15","Higashi Chaya, le case da tè","higashichaya"],["16:45","Gelato con la foglia d'oro","oro"],["18:30","Maimon Sushi","sushi"]],
+   cibo:"kaisendon, curry di Kanazawa",compra:"foglia d'oro, ceramica Kutani"},
+  {d:14,gs:"sab",dove:"Shirakawa-go e Takayama",t:"Il villaggio coi tetti di paglia, sera nella piccola Edo",img:"shirakawa",dorme:"Tokyu Stay Hida Takayama",
+   m:[["09:30","Shirakawa-go","shirakawa"],["12:00","Manzo di Hida da passeggio","hidabeef"],["15:00","Sanmachi Suji","takayama"],["15:45","Assaggi di sake","sakebrew"],["18:30","Manzo di Hida sul hoba-miso","hobamiso"]],
+   cibo:"nigiri di Hida su senbei, mitarashi dango",compra:"sarubobo, sake locale"},
+  {d:15,gs:"dom",dove:"Takayama → Nara · Obon",fest:true,t:"La notte delle lanterne a Nara",img:"nara",dorme:"MIMARU Kyoto Kawaramachi Gojo",
+   m:[["07:00","Mercato del mattino di Miyagawa","miyagawa"],["09:45","Treno Hida verso Nagoya","hida"],["14:30","I cervi di Nara","cervi"],["15:15","Tōdai-ji","todaiji"],["18:30","3.000 lanterne al Kasuga Taisha","nara"],["20:00","Il 大 acceso sul monte Takamado",null],["20:30","La finestra sul volto del Grande Buddha","daibutsu"]],
+   cibo:"kakinoha-zushi, mochi di Nakatanidō",compra:"senbei per i cervi"},
+  {d:16,gs:"lun",dove:"Kyoto · Okuribi",fest:true,t:"Bambù all'alba, Padiglione d'Oro, fuochi sulle montagne",img:"okuribi",dorme:"MIMARU Kyoto Kawaramachi Gojo",
+   m:[["07:30","Foresta di bambù di Arashiyama","arashiyama"],["08:30","Tenryu-ji","tenryuji"],["09:30","Villa Okochi e il suo matcha","okochi"],["11:00","Kinkaku-ji","kinkakuji"],["12:00","Ryoan-ji, il giardino di pietre","ryoanji"],["14:30","Kyoto International Manga Museum","manga"],["20:00","Gozan no Okuribi","okuribi"]],
+   cibo:"saba-zushi di Izuju, gelato al matcha",compra:"bambù, seta chirimen"},
+  {d:17,gs:"mar",dove:"Kyoto",t:"Diecimila torii, sake, Nishiki e Gion in yukata",img:"inari",dorme:"MIMARU Kyoto Kawaramachi Gojo",
+   m:[["06:00","Fushimi Inari prima della folla","inari"],["09:30","Sake a Fushimi","gekkeikan"],["11:30","Kiyomizu-dera","kiyomizu"],["12:15","Sannenzaka","sannenzaka"],["14:00","Mercato Nishiki","nishiki"],["17:30","Gion in yukata","gion"],["19:30","Cena sulle terrazze di Pontocho","pontocho"]],
+   cibo:"inari-zushi, nama-yatsuhashi",compra:"ceramica, bacchette, incensi"},
+  {d:18,gs:"mer",dove:"Uji e Kyoto",t:"Il tè di Uji, Nijō e il villaggio dei samurai",img:"byodoin",dorme:"MIMARU Kyoto Kawaramachi Gojo",
+   m:[["08:45","Byōdō-in, il tempio dei 10 yen","byodoin"],["10:00","Tutto al matcha","matcha"],["13:00","Castello di Nijō","nijo"],["14:45","Toei Kyoto Studio Park: samurai e ninja","eigamura"],["19:00","Ramen alla stazione di Kyoto","kyotostation"]],
+   cibo:"soba e dango al matcha",compra:"tè di Uji in latta"},
+  {d:19,gs:"gio",dove:"Kurama, Kibune, Higashiyama",t:"Montagna, spaghetti nel bambù, sera da kyototi",img:"kibune",dorme:"MIMARU Kyoto Kawaramachi Gojo",
+   m:[["08:45","Kurama-dera","kurama"],["10:30","Nagashi somen sopra il torrente","somen"],["12:00","Santuario Kibune","kibune"],["14:45","Ginkaku-ji","ginkakuji"],["15:30","Sentiero della Filosofia","filosofia"],["16:30","L'acquedotto del Nanzen-ji","suirokaku"],["18:00","Birra sull'argine del Kamo","kamogawa"]],
+   cibo:"mame-mochi, tsukemono",compra:"sansho, sottaceti"},
+  {d:20,gs:"ven",dove:"Osaka",fest:true,t:"Torneo dei licei, poi Dotonbori di notte",img:"dotonbori",dorme:"Hotel Forza Namba Dotonbori",
+   m:[["09:30","Kōshien, il baseball dei licei","koshien"],["15:00","Mercato Kuromon","kuromon"],["16:15","Doguyasuji: coltelli e cibo finto","doguyasuji"],["17:45","Hozenji Yokocho","hozenji"],["18:45","Dotonbori e l'insegna Glico","dotonbori"],["19:15","Takoyaki per strada","takoyaki"],["19:45","Okonomiyaki da Mizuno","okonomiyaki"]],
+   cibo:"551 Hōrai, cheesecake di Rikuro",compra:"coltelli, piastre per takoyaki"},
+  {d:21,gs:"sab",dove:"Osaka",t:"Mercatino, castello, Shinsekai, vestiti e club",img:"osakajo",dorme:"Hotel Forza Namba Dotonbori",
+   m:[["08:00","Mercatino del Shitenno-ji","shitennoji"],["10:00","Castello di Osaka","osakajo"],["12:15","Shinsekai","shinsekai"],["12:45","Kushikatsu","kushikatsu"],["14:30","Amerikamura","amemura"],["17:00","Shinsaibashi-suji","shinsaibashi"],["22:30","Club ad Amerikamura",null]],
+   cibo:"kushikatsu, doteyaki",compra:"vintage e streetwear"},
+  {d:22,gs:"dom",dove:"Osaka",t:"Den Den Town, Matsusaka e la Osaka di Edo",img:"umeda",dorme:"Hotel Forza Namba Dotonbori",
+   m:[["08:00","Sumiyoshi Taisha","sumiyoshi"],["10:00","Den Den Town","dendentown"],["12:30","Wagyu di Matsusaka","yakiniku"],["13:45","La Osaka dell'Ottocento al chiuso","konjakukan"],["15:00","Tenjinbashi-suji, 2,6 km di galleria","tenjinbashi"],["16:30","HEP Five e Gundam Base Osaka","hepfive"],["18:15","Umeda Sky al tramonto","umeda"],["20:00","Ramen di Kinryu","ramen"]],
+   cibo:"korokke, taiyaki, ikayaki",compra:"Gunpla, LUCUA, HEP Five"},
+  {d:23,gs:"lun",dove:"Himeji e Kobe",t:"L'airone bianco e il manzo di Kobe",img:"himeji",dorme:"Hotel Forza Namba Dotonbori",
+   m:[["09:00","Castello di Himeji","himeji"],["10:45","Giardino Kōko-en","kokoen"],["13:00","Manzo di Kobe da Steakland","wagyu"],["14:45","Nankinmachi","nankinmachi"],["16:30","Kitano Ijinkan","kitano"],["18:30","Port Tower al tramonto","porttower"]],
+   cibo:"korokke di Moriya, butaman",compra:"biscotti Fugetsudo"},
+  {d:24,gs:"mar",dove:"Hakone",t:"Il giro dell'anello e la notte in ryokan",img:"hakone",dorme:"Tonosawa Ichinoyu Honkan",
+   m:[["11:15","Museo all'aperto","openair"],["13:45","Owakudani","owakudani"],["14:15","Le uova nere del vulcano","kurotamago"],["14:45","Nave pirata sul lago Ashi","piratiashi"],["15:45","Il torii sull'acqua","hakone"],["18:00","Onsen privato e cena in ryokan","ryokan"]],
+   cibo:"uova nere, onsen manjū",compra:"yosegi"},
+  {d:25,gs:"mer",dove:"Enoshima, Kamakura, Yokohama",t:"Isola, Grande Buddha e porto di notte",img:"kamakura",dorme:"MIMARU Asakusa Station",
+   m:[["10:30","Enoshima","enoshima"],["12:30","Il passaggio a livello di Slam Dunk","slamdunk"],["14:00","Grande Buddha di Kamakura","kamakura"],["15:00","Komachi-dori","komachi"],["16:30","Cup Noodles Museum","cupnoodles"],["17:30","Red Brick Warehouse","redbrick"],["19:00","Chinatown","chinatown"],["20:30","Cosmo Clock di notte","yokohama"]],
+   cibo:"shirasu-don, nikuman",compra:"Hato sablé, Motomachi"},
+  {d:26,gs:"gio",dove:"Tokyo",t:"Mercato, Ginza, Nakano, Koenji, cena di wagyu",img:"nakano",dorme:"MIMARU Asakusa Station",
+   m:[["05:45","Sushi Dai a Toyosu, per chi vuole","sushi"],["07:30","Tsukiji Outer Market","tsukiji"],["10:45","Stazione di Tokyo","tokyostation"],["12:00","Ginza","ginza"],["14:30","Nakano Broadway","nakano"],["16:30","Vintage a Koenji","koenji"],["19:00","Wagyu a volontà","yakiniku"]],
+   cibo:"tamagoyaki, spiedini di wagyu",compra:"Uniqlo, Onitsuka Tiger, vintage"},
+  {d:27,gs:"ven",dove:"Tokyo → Italia",t:"Coltelli a Kappabashi e volo",img:"kappabashi",dorme:"volo verso le 20:00",
+   m:[["09:30","Kappabashi: coltelli col nome inciso","kappabashi"],["11:30","Ameyoko, ultimi drugstore","ameyoko"],["14:15","Treno per l'aeroporto",null],["16:30","Tax-free prima del check-in",null]],
+   cibo:"ramen o tendon veloce",compra:"coltelli in stiva"},
+];
+
+const FESTE = [["hanabi","Kōtō Hanabi","mer 11/8 · Tokyo","Un'ora di fuochi sul fiume, gratis"],["nara","Lanterne di Nara","dom 15/8 · Nara","3.000 lanterne, il 大 sul monte"],
+  ["okuribi","Gozan no Okuribi","lun 16/8 · Kyoto","Cinque fuochi sulle montagne"],["koshien","Kōshien","ven 20/8 · Nishinomiya","Il torneo nazionale dei licei"]];
+const CIBO = [["wagyu","Manzo di Kobe","Steakland · Kobe","150 g a pranzo, ¥3.500–3.880"],["sushi","Sushi","Toyosu · Tsukiji · Omicho","Da ¥1.000 a nastro a ¥4.800 all'alba"],
+  ["takoyaki","Takoyaki","Dotonbori · Osaka","Polpo in palline bollenti"],["ramen","Ramen","Kyoto · Osaka","Una ciotola per città"],
+  ["monja","Monjayaki","Tsukishima · Tokyo","La frittella che si cuoce da soli"],["hidabeef","Manzo di Hida","Shirakawa-go · Takayama","Da passeggio, da ¥250"],
+  ["okonomiyaki","Okonomiyaki","Mizuno · Osaka","Si fa la coda, ne vale la pena"],["matcha","Matcha","Uji","Parfait, soba, dango: tutto verde"]];
+const NERD = [["akihabara","Akihabara","9/8","Retrogame, figure, maid café, karaoke"],["superpotato","Super Potato","9/8","Console e cartucce di tutte le epoche"],
+  ["teamlab","teamLab Planets","11/8","Arte digitale da attraversare scalzi"],["goldengai","Golden Gai","10/8 · 26/8","200 bar da sei posti"],
+  ["nakano","Nakano Broadway","26/8","Oltre 25 negozi Mandarake"],["dendentown","Den Den Town","22/8","L'Akihabara di Osaka"],
+  ["eigamura","Toei Kyoto Studio Park","18/8","Samurai e ninja per strada"],["slamdunk","Kamakurakōkōmae","25/8","Il passaggio a livello di Slam Dunk"]];
+
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const $ = (id) => document.getElementById(id);
+
+// ---- costruzione della pagina ----
+$("tappe").innerHTML = TAPPE.map(([k, n, notti, img, id]) =>
+  `<a class="tappa rivela" href="#${id}"><img src="${FOTO(img)}" alt="" loading="lazy"><span class="k">${k}</span><div><b>${n}</b><small>${notti}</small></div></a>`).join("");
+
+// la rotta disegnata: una linea che attraversa le 8 tappe
+(() => {
+  const W = 1000, H = 150, n = TAPPE.length, xs = TAPPE.map((_, i) => 40 + i * (W - 80) / (n - 1));
+  const ys = [92, 52, 40, 70, 104, 112, 66, 92];
+  let d = `M${xs[0]},${ys[0]}`;
+  for (let i = 1; i < n; i++) { const mx = (xs[i - 1] + xs[i]) / 2; d += ` C${mx},${ys[i - 1]} ${mx},${ys[i]} ${xs[i]},${ys[i]}`; }
+  $("rotta").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Il percorso: Tokyo, Nikko, Kanazawa, Takayama, Kyoto, Osaka, Hakone, Tokyo">
+    <path id="linea" d="${d}"/>${TAPPE.map(([k, nome], i) => `<g class="fermata"><circle cx="${xs[i]}" cy="${ys[i]}" r="8" class="${i === 6 ? "ryo" : ""}"/>
+    <text class="k" x="${xs[i]}" y="${ys[i] - 18}" text-anchor="middle">${k}</text><text x="${xs[i]}" y="${ys[i] + 28}" text-anchor="middle">${nome}</text></g>`).join("")}</svg>`;
+})();
+
+const scheda = ([t, x, f]) => f
+  ? `<article class="scheda rivela"><figure><img src="${FOTO(f)}" alt="${esc(x)}" loading="lazy"></figure><div class="t"><time>${t}</time><span>${esc(x)}</span></div></article>`
+  : `<article class="scheda solo rivela"><div class="t"><time>${t}</time><span>${esc(x)}</span></div></article>`;
+
+$("viaggio").innerHTML = GIORNI.map((g, i) => {
+  const c = CAPITOLI[g.d];
+  const cap = c ? `<section class="capitolo gutter" data-scena="${c[4]}" data-hud="${g.d}"><div>
+      <div class="kanji">${c[0]}</div><h2>${esc(c[1])}</h2><p>${esc(c[2])}</p><p class="riga-c">${esc(c[3])}</p></div></section>` : "";
+  return cap + `<section class="giorno gutter${i % 2 ? " destra" : ""}" id="g${g.d}" data-scena="${g.img}" data-hud="${g.d}"><div class="largo"><div class="pannello">
+    <div class="testa"><p class="dove">${g.fest ? '<span class="fest">● festa · </span>' : ""}${esc(g.dove)}</p>
+      <div class="numero"><b>${g.d}</b><span>${g.gs} · agosto · giorno ${i + 1} di 20</span></div><h3>${esc(g.t)}</h3></div>
+    <div class="schede">${g.m.map(scheda).join("")}</div>
+    <div class="extra"><span class="chip cibo"><b>Per strada</b>${esc(g.cibo)}</span><span class="chip compra"><b>Comprare</b>${esc(g.compra)}</span><span class="chip dorme"><b>Dorme</b>${esc(g.dorme)}</span></div>
+  </div></div></section>`;
+}).join("");
+
+const mosaico = (id, righe) => $(id).innerHTML = righe.map(([img, t, q, d]) =>
+  `<figure class="rivela"><img src="${FOTO(img)}" alt="${esc(t)}" loading="lazy"><figcaption><em>${esc(q)}</em><b>${esc(t)}</b><span>${esc(d)}</span></figcaption></figure>`).join("");
+mosaico("feste", FESTE); mosaico("cibo", CIBO); mosaico("nerd", NERD);
+
+$("crediti").innerHTML = Object.entries(CREDITI).map(([k, c]) =>
+  `<li>${k}: <a href="${esc(c.pagina)}" target="_blank" rel="noopener">${esc(c.titolo.replace(/^File:/, ""))}</a> · ${esc(c.autore || "autore n.d.")} · ${esc(c.licenza)}</li>`).join("");
+
+$("hud-barra").innerHTML = GIORNI.map((g) => `<i data-d="${g.d}"></i>`).join("");
+
+// ---- la scena: cambia foto quando una sezione passa a metà schermo ----
+const lenta = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const strati = [$("sa"), $("sb")];
+let attivo = 0, scenaOra = null;
+function scena(k) {
+  if (k === scenaOra) return;
+  scenaOra = k;
+  const img = new Image();
+  img.onload = () => {
+    if (scenaOra !== k) return;
+    const prossimo = strati[1 - attivo];
+    prossimo.src = img.src;
+    prossimo.classList.remove("on"); void prossimo.offsetWidth; prossimo.classList.add("on");
+    strati[attivo].classList.remove("on");
+    attivo = 1 - attivo;
+  };
+  img.src = FOTO(k);
+}
+let giornoOra = null;
+function hud(d) {
+  const box = $("hud");
+  if (!d) { box.classList.remove("on"); giornoOra = null; return; }
+  box.classList.add("on");
+  d = +d;
+  if (d === giornoOra) return;
+  const g = GIORNI.find((x) => x.d === d), su = giornoOra === null || d > giornoOra;
+  giornoOra = d;
+  const flip = $("hud-n"), vecchio = flip.querySelector("span:last-child"), nuovo = document.createElement("span");
+  nuovo.textContent = d;
+  if (!lenta && vecchio) {
+    nuovo.style.transform = `translateY(${su ? 100 : -100}%)`; nuovo.style.opacity = 0;
+    flip.append(nuovo);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      nuovo.style.transform = ""; nuovo.style.opacity = "";
+      vecchio.style.transform = `translateY(${su ? -100 : 100}%)`; vecchio.style.opacity = 0;
+      setTimeout(() => vecchio.remove(), 600);
+    }));
+  } else { flip.replaceChildren(nuovo); }
+  $("hud-gs").textContent = g.gs.toUpperCase();
+  $("hud-dove").textContent = g.dove.split(" · ")[0];
+  $("hud-festa").classList.toggle("on", !!g.fest);
+  document.querySelectorAll("#hud-barra i").forEach((i) => {
+    i.classList.toggle("fatto", +i.dataset.d < d); i.classList.toggle("ora", +i.dataset.d === d);
+  });
+}
+const osserva = new IntersectionObserver((voci) => {
+  for (const v of voci) if (v.isIntersecting) { scena(v.target.dataset.scena); hud(v.target.dataset.hud); }
+}, { rootMargin: "-45% 0px -45% 0px" });
+document.querySelectorAll("[data-scena]").forEach((el) => osserva.observe(el));
+scena("inari");
+
+// ---- animazioni (solo se GSAP c'è e il movimento non è ridotto) ----
+if (window.gsap && window.ScrollTrigger && !lenta) {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.from(".copertina h1 .riga span", { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: .14, delay: .15 });
+  gsap.from(".copertina .occhiello, .copertina .sotto, .copertina .azioni, .copertina .scorri", { y: 30, opacity: 0, duration: 1, ease: "power3.out", stagger: .1, delay: .5 });
+
+  const linea = document.getElementById("linea"), lung = linea.getTotalLength();
+  gsap.set(linea, { strokeDasharray: lung, strokeDashoffset: lung });
+  gsap.to(linea, { strokeDashoffset: 0, ease: "none", scrollTrigger: { trigger: "#rotta", start: "top 85%", end: "bottom 35%", scrub: .6 } });
+  gsap.from(".fermata", { scale: 0, opacity: 0, transformOrigin: "center", stagger: .12, duration: .6, ease: "back.out(2)",
+    scrollTrigger: { trigger: "#rotta", start: "top 75%" } });
+
+  document.querySelectorAll(".capitolo").forEach((c) => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: c, start: "top bottom", end: "bottom top", scrub: .8 } });
+    tl.fromTo(c.querySelector(".kanji"), { yPercent: 40, scale: 1.25, opacity: 0 }, { yPercent: 0, scale: 1, opacity: 1, ease: "power2.out", duration: .45 })
+      .to(c.querySelector(".kanji"), { yPercent: -30, opacity: 0, ease: "power2.in", duration: .55 });
+    gsap.from(c.querySelectorAll("h2, p"), { y: 50, opacity: 0, duration: 1, ease: "power3.out", stagger: .1,
+      scrollTrigger: { trigger: c, start: "top 60%" } });
+  });
+
+  const pannelli = new IntersectionObserver((voci) => voci.forEach((v) => {
+    if (!v.isIntersecting) return;
+    pannelli.unobserve(v.target);
+    gsap.to(v.target, { y: 0, opacity: 1, duration: 1.1, ease: "power3.out" });
+    gsap.to(v.target.querySelectorAll(".testa > *"), { y: 0, opacity: 1, duration: .9, ease: "power3.out", stagger: .08, delay: .15 });
+  }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".giorno .pannello").forEach((p) => {
+    gsap.set(p, { y: 90, opacity: 0 }); gsap.set(p.querySelectorAll(".testa > *"), { y: 40, opacity: 0 });
+    pannelli.observe(p);
+  });
+
+  gsap.set(".rivela", { y: 70, opacity: 0 });
+  const comparsa = new IntersectionObserver((voci) => {
+    const entrano = voci.filter((v) => v.isIntersecting).map((v) => v.target);
+    entrano.forEach((el) => comparsa.unobserve(el));
+    if (entrano.length) gsap.to(entrano, { y: 0, opacity: 1, duration: .9, ease: "power3.out", stagger: .07 });
+  }, { rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll(".rivela").forEach((el) => comparsa.observe(el));
+  // rete di sicurezza: se per qualche motivo un trigger non scatta, dopo 8 s si vede tutto lo stesso
+  setTimeout(() => document.querySelectorAll(".rivela, .giorno .pannello, .testa > *").forEach((el) => {
+    if (el.getBoundingClientRect().top < innerHeight && +getComputedStyle(el).opacity === 0) gsap.to(el, { y: 0, opacity: 1, duration: .6 });
+  }), 8000);
+  document.querySelectorAll(".scheda figure img, .mosaico img").forEach((img) =>
+    gsap.fromTo(img, { scale: 1.18 }, { scale: 1, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: true } }));
+
+  addEventListener("load", () => ScrollTrigger.refresh());
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+}
+
+// ---- presentazione ----
+const SLIDE = [{ tipo: "copertina" }, ...GIORNI.map((g, i) => ({ tipo: "giorno", g, i })), { tipo: "fine" }];
+const show = $("show");
+let cur = 0;
+function disegna() {
+  const s = SLIDE[cur], box = $("s-slide");
+  let img;
+  if (s.tipo === "copertina") {
+    img = "inari";
+    box.innerHTML = `<p class="num">8 → 27 agosto 2027 · in 3</p><h2>Giappone, 20 giorni</h2><p>Tokyo · Nikko · Kanazawa · Takayama · Kyoto · Nara · Osaka · Hakone · Kamakura · Yokohama</p>`;
+  } else if (s.tipo === "fine") {
+    img = "hakone";
+    box.innerHTML = `<p class="num">27 agosto</p><h2>Itterasshai</h2><p>"Vai e torna": così si saluta chi parte.</p>`;
+  } else {
+    const g = s.g; img = g.img;
+    const foto = g.m.filter((x) => x[2] && x[2] !== g.img).slice(0, 4);
+    box.innerHTML = `<p class="num">giorno ${s.i + 1} di 20 · ${esc(g.dove)}</p><div class="grande">${g.d}</div><h2>${esc(g.t)}</h2>
+      <ul class="lista">${g.m.slice(0, 6).map(([t, x]) => `<li><time>${t}</time>${esc(x)}</li>`).join("")}</ul>
+      <div class="striscia">${foto.map((x) => `<img src="${FOTO(x[2])}" alt="${esc(x[1])}">`).join("")}</div>`;
+  }
+  const sf = $("s-img");
+  sf.style.animation = "none"; void sf.offsetWidth; sf.style.animation = "";
+  sf.src = FOTO(img);
+  const c = CREDITI[img];
+  $("s-cred").textContent = c ? `Foto: ${c.autore || "Wikimedia Commons"} · ${c.licenza}` : "";
+  $("s-av").style.width = ((cur + 1) / SLIDE.length * 100) + "%";
+  $("s-prima").disabled = cur === 0;
+  $("s-dopo").textContent = cur === SLIDE.length - 1 ? "Fine" : "Dopo →";
+}
+const vai = (n) => { cur = Math.max(0, Math.min(SLIDE.length - 1, n)); disegna(); };
+$("apri-show").addEventListener("click", () => { show.hidden = false; vai(0); $("s-dopo").focus(); });
+const chiudi = () => { show.hidden = true; $("apri-show").focus(); };
+$("s-chiudi").addEventListener("click", chiudi);
+$("s-prima").addEventListener("click", () => vai(cur - 1));
+$("s-dopo").addEventListener("click", () => cur === SLIDE.length - 1 ? chiudi() : vai(cur + 1));
+document.addEventListener("keydown", (e) => {
+  if (show.hidden) return;
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); vai(cur + 1); }
+  else if (e.key === "ArrowLeft") vai(cur - 1);
+  else if (e.key === "Escape") chiudi();
+});
+let x0 = null;
+show.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+show.addEventListener("touchend", (e) => {
+  if (x0 === null) return;
+  const dx = e.changedTouches[0].clientX - x0; x0 = null;
+  if (Math.abs(dx) > 50) vai(cur + (dx < 0 ? 1 : -1));
+});
+</script>
+
+</body>
+</html>
